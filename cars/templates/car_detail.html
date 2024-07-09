@@ -80,11 +80,21 @@
     }
   </style>
   <div class="car-card">
+    {% if object.photo %}
       <img src="{{ object.photo.url }}" alt="{{ object.model }} - {{ object.brand }}">
-      <h2>{{ object.brand }} {{ object.model }}</h2>
-      <p><strong>Ano de fabricação:</strong> {{ object.factory_year }}</p>
-      <p><strong>Ano do modelo:</strong> {{ object.model_year }}</p>
-      <p><strong>Placa:</strong> {{ object.plate }}</p>
-      <p><strong>Preço:</strong> R$ {{ object.value }}</p>
+    {% else %}
+      <p class="no-photo">Foto não disponível</p>
+    {% endif %}
+    <h2>{{ object.brand }} {{ object.model }}</h2>
+    <p><strong>Ano de fabricação:</strong> {{ object.factory_year }}</p>
+    <p><strong>Ano do modelo:</strong> {{ object.model_year }}</p>
+    <p><strong>Placa:</strong> {{ object.plate }}</p>
+    <p><strong>Preço:</strong> R$ {{ object.value }}</p>
   </div>
+  {% if user.is_authenticated %}
+    <div class="buttons-container">
+      <a href="{% url 'car_update' pk=object.pk %}" class="btn btn-primary">Editar</a>
+      <a href="{% url 'car_delete' pk=object.pk %}" class="btn btn-danger">Deletar</a>
+    </div>
+  {% endif %}
 {% endblock %}
